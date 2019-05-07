@@ -8,10 +8,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:createablo
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 5
-"""def css_count():
-css_count = ""
-css_count += 1 
-return""" 
+
 class Blog(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
