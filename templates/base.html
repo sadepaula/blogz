@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{title}}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style/styles.css') }}">
+    <title>Build a Blog </title>
 </head>
 <body>
     <a href="/newblog">Create a New Blog</a>
     <a href="/blog">Blog Homepage</a>
+    <h1 id= "main_header"> Build a Blog </h1>
 
     {% block content%}
     {% endblock %}
