@@ -85,16 +85,22 @@ def logout():
 
 @app.route('/blog',methods =['GET'])
 def blog():
-    if request.args:
-        blogpost_num = request.args.get("id")
+    blogpost_num = request.args.get("id")
+    blog_user = request.args.get("user")
+    if blogpost_num:
+        
         blog = Blog.query.get(blogpost_num)
         return render_template('individualblogs.html', blog=blog)
-
+    
+    if blog_user:
+        user = User.query.get(blog_user)
+        blogs_of_user = Blog.query.filter_by(owner=user)
+    
+        return render_template ("singleUser.html", blogs=blogs_of_user)
     else:
         blogs = Blog.query.all()
         return render_template ("blog.html", blogs=blogs)
-
-
+    
 @app.route('/newblog', methods=['POST', 'GET'])
 def newpost():
     owner = User.query.filter_by(username= session['username']).first()
@@ -112,17 +118,14 @@ def newpost():
 
     return render_template('newblog.html')
 
+@app.route ('/index')
+def index():
+    users = User.query.all()  
+    return render_template('index.html', users=users)
+
 @app.route('/')
 def home():
-    return redirect ("/login")
-
-"""@app.route ('/index')
-def index():
-    users = User.query.all()
-    username= User.username  
-    print (users)  
-    return redirect("/blog?user=" + (username))"""
-    
+    return redirect ("/index")
 
 if __name__ == '__main__':
     app.run()
