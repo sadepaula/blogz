@@ -3,10 +3,11 @@ h1 {
     font-family: 'Lucida Sans';
 }
 p {
-    color: green;
+    color: rgb(115, 119, 115);
 }
 body {
     padding: 35px 40px 40px 40px;
+    background-color: rgb(237, 250, 245);
 }
 #main_header {
     font: bolder; 
@@ -15,12 +16,12 @@ body {
 
 .container{
     border-radius: 5px;
-    background-color: #f2f2f2;
+    background-color: #e9d2d2;
     padding: 20px;
 }
 }
 #form_title {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family : 'Impact';
 
 }
 .topnav{
@@ -39,4 +40,26 @@ body {
 }
 .error {
     color: red;
+}
+.correct {
+    text-align: center;
+    padding: 5px 10px;
+    font-size: 15px;   
+    background-color: rgba(197, 241, 197, 0.932);
+    color: grey;
+}
+
+input[type = text] {
+    width: 90%;
+    padding:5px 16px;
+    
+}
+textarea{
+    width: 90%;
+    padding:5px 16px;
+}
+
+input[type = password] {
+    width: 100%;
+    padding:5px 16px;
 }
