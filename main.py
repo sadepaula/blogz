@@ -88,7 +88,7 @@ def logout():
 def blog():
     blogpost_num = request.args.get("id")
     blog_user = request.args.get("user")
-    owner = User.query.filter_by(username=session['username']).first()
+    #owner = User.query.filter_by(username=session['username']).first()
     if blogpost_num:
         
         blog = Blog.query.get(blogpost_num)
