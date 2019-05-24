@@ -60,27 +60,24 @@ def signup():
         username = request.form['username']
         password = request.form['password']
         verify = request.form['verify']
-
-        """if not username:
-            flash ("Must have a username", 'error')
-        if not password or not verify:
-            flash("Must enter password")
-            #flash ("Passwords must match",'error')
-        return redirect ('/signup')
-        
-
-        #return redirect ('/blog')"""
-        
-         
         existing_user = User.query.filter_by(username=username).first()
-        if not existing_user:
-            new_user = User(username, password)
-            db.session.add(new_user)
-            db.session.commit()
-            session['username'] = username
-            return redirect ('/newblog')
+        if not username:
+            flash ("Must have a username", 'error')
+        if password != verify:
+            flash ("Passwords must match",'error')
+        if existing_user:
+            flash ("User already exists")
+        if not existing_user and password == verify:
             
-    return render_template('signup.html')
+                new_user = User(username, password)
+                db.session.add(new_user)
+                db.session.commit()
+                session['username'] = username
+                return redirect ('/newblog')
+        else:
+            return render_template ('signup.html')
+    
+    return render_template ('signup.html')
 
 @app.route('/logout')
 def logout():
