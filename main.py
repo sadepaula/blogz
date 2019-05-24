@@ -34,7 +34,7 @@ class User(db.Model):
         
 @app.before_request
 def require_login():
-    allowed_routes = ['login', 'signup','index']
+    allowed_routes = ['login', 'signup','index','blog']
     if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
 
@@ -60,22 +60,26 @@ def signup():
         username = request.form['username']
         password = request.form['password']
         verify = request.form['verify']
-        
-        usernameError= ""
-        password1Error= ""
-        verifyError = ""
 
+        """if not username:
+            flash ("Must have a username", 'error')
+        if not password or not verify:
+            flash("Must enter password")
+            #flash ("Passwords must match",'error')
+        return redirect ('/signup')
+        
+
+        #return redirect ('/blog')"""
+        
+         
         existing_user = User.query.filter_by(username=username).first()
         if not existing_user:
             new_user = User(username, password)
             db.session.add(new_user)
             db.session.commit()
             session['username'] = username
-            return redirect('/blog')
-        else:
-            return "<h1> User Exists </h1>"
-
-
+            return redirect ('/newblog')
+            
     return render_template('signup.html')
 
 @app.route('/logout')
@@ -87,16 +91,18 @@ def logout():
 def blog():
     blogpost_num = request.args.get("id")
     blog_user = request.args.get("user")
+    owner = User.query.filter_by(username=session['username']).first()
     if blogpost_num:
         
         blog = Blog.query.get(blogpost_num)
         return render_template('individualblogs.html', blog=blog)
     
-    if blog_user:
+    elif blog_user:
+        
         user = User.query.get(blog_user)
-        blogs_of_user = Blog.query.filter_by(owner=user)
-    
-        return render_template ("singleUser.html", blogs=blogs_of_user)
+        blogs = Blog.query.filter_by(owner=user).all()
+        print(blogs)
+        return render_template ("singleUser.html", blogs=blogs)
     else:
         blogs = Blog.query.all()
         return render_template ("blog.html", blogs=blogs)
